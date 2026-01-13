@@ -7,6 +7,7 @@ import Image from "next/image";
 
 export default function AdminBooksPage() {
   const [books, setBooks] = useState([]);
+  const [genres, setGenres] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const [mode, setMode] = useState("create"); // create | edit
@@ -23,6 +24,7 @@ export default function AdminBooksPage() {
   const token =
     typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
+  // Fetch all books
   const fetchBooks = async () => {
     setLoading(true);
     const res = await fetch(`${API_BASE_URL}/api/books`);
@@ -31,8 +33,16 @@ export default function AdminBooksPage() {
     setLoading(false);
   };
 
+  // Fetch all genres
+  const fetchGenres = async () => {
+    const res = await fetch(`${API_BASE_URL}/api/genres`);
+    const data = await res.json();
+    setGenres(Array.isArray(data) ? data : []);
+  };
+
   useEffect(() => {
     fetchBooks();
+    fetchGenres();
   }, []);
 
   const onChange = (key, value) => setForm((p) => ({ ...p, [key]: value }));
@@ -111,7 +121,7 @@ export default function AdminBooksPage() {
 
   return (
     <ProtectedRoute role="admin">
-      <div className="space-y-6">
+      <div className="space-y-6 ">
         <div>
           <h1 className="text-2xl font-bold">Manage Books</h1>
           <p className="text-sm text-gray-600">
@@ -139,12 +149,18 @@ export default function AdminBooksPage() {
             onChange={(e) => onChange("author", e.target.value)}
           />
 
-          <input
+          <select
             className="w-full border p-2"
-            placeholder="Genre"
             value={form.genre}
             onChange={(e) => onChange("genre", e.target.value)}
-          />
+          >
+            <option value="">Select genre</option>
+            {genres.map((g) => (
+              <option key={g._id} value={g.name}>
+                {g.name}
+              </option>
+            ))}
+          </select>
 
           <input
             className="w-full border p-2"
@@ -181,45 +197,47 @@ export default function AdminBooksPage() {
         <div className="space-y-3">
           <h2 className="font-semibold">All Books</h2>
 
-          {loading ? (
-            <p>Loading...</p>
-          ) : books.length === 0 ? (
-            <p className="text-sm text-gray-600">No books found.</p>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {books.map((b) => (
-                <div key={b._id} className="border rounded p-3 space-y-2">
-                  <Image
-                    src={b.coverImage}
-                    alt={b.title}
-                    width={300}
-                    height={450}
-                    className="w-full h-auto rounded"
-                  />
-                  <div>
-                    <h3 className="font-semibold">{b.title}</h3>
-                    <p className="text-sm text-gray-600">{b.author}</p>
-                    <p className="text-sm text-gray-600">Genre: {b.genre}</p>
-                  </div>
+          <div className="">
+            {loading ? (
+              <p>Loading...</p>
+            ) : books.length === 0 ? (
+              <p className="text-sm text-gray-600">No books found.</p>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {books.map((b) => (
+                  <div key={b._id} className="border rounded p-3 space-y-2">
+                    <Image
+                      src={b.coverImage}
+                      alt={b.title}
+                      width={300}
+                      height={450}
+                      className="w-full h-auto rounded"
+                    />
+                    <div>
+                      <h3 className="font-semibold">{b.title}</h3>
+                      <p className="text-sm text-gray-600">{b.author}</p>
+                      <p className="text-sm text-gray-600">Genre: {b.genre}</p>
+                    </div>
 
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => startEdit(b)}
-                      className="border px-3 py-1 rounded"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => remove(b._id)}
-                      className="border px-3 py-1 rounded"
-                    >
-                      Delete
-                    </button>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => startEdit(b)}
+                        className="border px-3 py-1 rounded"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => remove(b._id)}
+                        className="border px-3 py-1 rounded"
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          )}
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </ProtectedRoute>
