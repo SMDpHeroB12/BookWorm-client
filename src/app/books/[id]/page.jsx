@@ -89,7 +89,7 @@ export default function BookDetails() {
           </select>
 
           <textarea
-            className="w-full border p-2 min-h-[100px]"
+            className="w-full border p-2 min-h-25"
             placeholder="Your review..."
             value={comment}
             onChange={(e) => setComment(e.target.value)}

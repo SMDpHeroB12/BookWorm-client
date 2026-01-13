@@ -1,6 +1,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,17 +25,14 @@ export default function RootLayout({ children }) {
       <body className="min-h-screen flex flex-col bg-gray-50 text-gray-900">
         <AuthProvider>
           {/* Header */}
-          <header className="border-b border-gray-200 shadow-sm p-4 font-semibold">
-            <span className="text-primary">Book</span> Worm
-          </header>
 
+          <Navbar />
           {/* Main */}
-          <main className="flex-1 p-4">{children}</main>
-
+          <main className="flex-1 px-4 py-6 sm:px-6 lg:px-8">
+            <div className="mx-auto w-full max-w-6xl">{children}</div>
+          </main>
           {/* Footer */}
-          <footer className="border-t border-gray-200 p-4 text-sm text-center">
-            © {new Date().getFullYear()} BookWorm
-          </footer>
+          <Footer />
         </AuthProvider>
       </body>
     </html>
