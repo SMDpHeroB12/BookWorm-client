@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Image from "next/image";
+import { API_BASE_URL } from "@/lib/api";
 
 export default function BookDetails() {
   const { id } = useParams();
@@ -10,13 +11,12 @@ export default function BookDetails() {
 
   useEffect(() => {
     if (!id) return;
-
-    fetch(`http://localhost:5000/api/books/${id}`)
+    fetch(`${API_BASE_URL}/api/books/${id}`)
       .then((res) => res.json())
       .then(setBook);
   }, [id]);
 
-  if (!book) return <p>Loading...</p>;
+  if (!book) return <p className="p-4">Loading...</p>;
 
   return (
     <div className="max-w-md space-y-4">
@@ -25,9 +25,8 @@ export default function BookDetails() {
         alt={book.title}
         width={300}
         height={450}
-        className="w-full"
+        className="w-full h-auto"
       />
-
       <h1 className="text-2xl font-bold">{book.title}</h1>
       <p className="text-gray-600">{book.author}</p>
       <p>{book.description}</p>

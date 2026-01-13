@@ -3,18 +3,18 @@
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
+import { API_BASE_URL } from "@/lib/api";
 
 export default function LoginClient() {
   const { login } = useAuth();
   const router = useRouter();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const res = await fetch("http://localhost:5000/api/auth/login", {
+    const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
@@ -22,14 +22,12 @@ export default function LoginClient() {
 
     const data = await res.json();
 
-    if (res.ok) {
-      login(data.token, data.user);
-      router.push(
-        data.user.role === "admin" ? "/admin/dashboard" : "/my-library"
-      );
-    } else {
-      alert(data.message);
-    }
+    if (!res.ok) return alert(data.message || "Login failed");
+
+    login(data.token, data.user);
+    router.push(
+      data.user.role === "admin" ? "/admin/dashboard" : "/my-library"
+    );
   };
 
   return (
@@ -39,6 +37,7 @@ export default function LoginClient() {
 
         <input
           className="w-full border p-2"
+          type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -46,8 +45,8 @@ export default function LoginClient() {
 
         <input
           className="w-full border p-2"
-          placeholder="Password"
           type="password"
+          placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
