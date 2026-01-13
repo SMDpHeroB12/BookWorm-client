@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { AuthProvider } from "@/context/AuthContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,15 +21,20 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="min-h-screen flex flex-col bg-gray-50 text-gray-900">
-        <header className="border-b border-gray-200 shadow-sm p-4 font-semibold">
-          <span className="text-primary">Book</span> Worm
-        </header>
+        <AuthProvider>
+          {/* Header */}
+          <header className="border-b border-gray-200 shadow-sm p-4 font-semibold">
+            <span className="text-primary">Book</span> Worm
+          </header>
 
-        <main className="flex-1 p-4">{children}</main>
+          {/* Main */}
+          <main className="flex-1 p-4">{children}</main>
 
-        <footer className="border-t border-gray-200 p-4 text-sm text-center">
-          © {new Date().getFullYear()} BookWorm
-        </footer>
+          {/* Footer */}
+          <footer className="border-t border-gray-200 p-4 text-sm text-center">
+            © {new Date().getFullYear()} BookWorm
+          </footer>
+        </AuthProvider>
       </body>
     </html>
   );
