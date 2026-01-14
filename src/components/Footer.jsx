@@ -34,6 +34,13 @@ export default function Footer() {
           <a className="block text-gray-600 hover:text-amber-800" href="#">
             Facebook
           </a>
+
+          <Link
+            className="block text-gray-600 hover:text-amber-800"
+            href="https://twitter.com/bookworm"
+          >
+            Twitter
+          </Link>
           <a className="block text-gray-600 hover:text-amber-800" href="#">
             LinkedIn
           </a>

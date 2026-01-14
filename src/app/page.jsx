@@ -1,24 +1,9 @@
-"use client";
+export const metadata = {
+  title: "BookWorm | Home",
+};
 
-import { useAuth } from "@/context/AuthContext";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import HomeRedirectClient from "./HomeRedirectClient";
 
-export default function Home() {
-  const { user, loading } = useAuth();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (loading) return;
-
-    if (!user) {
-      router.push("/login");
-    } else if (user.role === "admin") {
-      router.push("/admin/dashboard");
-    } else {
-      router.push("/my-library");
-    }
-  }, [user, loading]);
-
-  return null;
+export default function HomePage() {
+  return <HomeRedirectClient />;
 }
