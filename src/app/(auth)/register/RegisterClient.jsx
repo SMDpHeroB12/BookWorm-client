@@ -77,7 +77,7 @@ export default function RegisterClient() {
       return toast.error("Name, email, and password are required");
     }
 
-    // ✅ Strict password validation
+    // Strict password validation
     if (!passwordIsValid) {
       return toast.error(
         "Password must be at least 6 characters and include 1 capital, 1 small, and 1 number"
@@ -186,7 +186,7 @@ export default function RegisterClient() {
                   type="file"
                   accept="image/*"
                   onChange={(e) => setPhotoFile(e.target.files?.[0] || null)}
-                  className="w-full rounded-xl border border-amber-200 bg-white/90 px-3 py-2 text-sm"
+                  className="w-full rounded-xl border border-amber-200 bg-white/90 px-3 py-2 text-sm file-input "
                 />
               </div>
 
@@ -196,7 +196,7 @@ export default function RegisterClient() {
                     Password
                   </label>
 
-                  {/* ✅ Always-visible Show/Hide */}
+                  {/* Always-visible Show/Hide */}
                   <button
                     type="button"
                     onClick={() => setShowPassword((v) => !v)}
@@ -214,7 +214,7 @@ export default function RegisterClient() {
                   required
                 />
 
-                {/* ✅ Weak Password Meter (below password box) */}
+                {/*  Weak Password Meter */}
                 <div className="space-y-2 pt-1">
                   <div className="h-2 w-full rounded-full bg-amber-100 overflow-hidden border border-amber-200">
                     <div
