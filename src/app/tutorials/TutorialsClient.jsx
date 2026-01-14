@@ -64,13 +64,13 @@ export default function TutorialsClient() {
             title: "How to build a reading habit",
             description:
               "A short guide to start reading daily with small goals.",
-            videoUrl: "https://www.youtube.com/watch?v=4A1w0C6YxqQ",
+            videoUrl: "https://www.youtube.com/watch?v=ElEtS6nL-M0",
           },
           {
             _id: "demo-2",
             title: "How to choose your next book",
             description: "Pick books by mood, genre, and reading time.",
-            videoUrl: "https://www.youtube.com/watch?v=Gv6V3Ww4w4I",
+            videoUrl: "https://www.youtube.com/watch?v=4fvoz70Im58",
           },
         ]);
       } finally {

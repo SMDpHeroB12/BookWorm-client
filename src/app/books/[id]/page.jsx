@@ -101,7 +101,7 @@ export default function BookDetails() {
                 alt={book.title}
                 width={360}
                 height={520}
-                className="w-full max-w-[320px] md:max-w-[360px] h-auto rounded-2xl border border-amber-200/60 shadow-sm"
+                className="w-full max-w-[320px] md:max-w-90 h-auto rounded-2xl border border-amber-200/60 shadow-sm"
               />
             </div>
 

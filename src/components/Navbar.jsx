@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Logo from "./Logo";
 
 export default function Navbar() {
   const { user, logout } = useAuth();
@@ -42,9 +43,13 @@ export default function Navbar() {
 
   return (
     <header className="border-b border-amber-200/60 bg-amber-50/60 backdrop-blur">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+      <div className="mx-auto max-w-6xl px-6 py-4 flex items-center justify-between">
         {/* Left: Logo */}
-        <Link
+        <Logo
+          onClick={() => {
+            setProfileOpen(false);
+            closeMobile();
+          }}
           href={
             user
               ? user.role === "admin"
@@ -52,16 +57,7 @@ export default function Navbar() {
                 : "/dashboard"
               : "/"
           }
-          className="font-semibold tracking-tight"
-          onClick={() => {
-            setProfileOpen(false);
-            closeMobile();
-          }}
-        >
-          <span className="text-amber-700">Book</span>
-          <span className="text-gray-900">Worm</span>
-        </Link>
-
+        />
         {/* Center: Desktop Links */}
         {user && (
           <nav className="hidden md:flex items-center gap-6 text-sm">
