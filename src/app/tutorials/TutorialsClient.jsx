@@ -1,5 +1,6 @@
 "use client";
 
+import LoadingSpinner from "@/components/LoadingSpinner";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import Card from "@/components/ui/Card";
 import Input from "@/components/ui/Input";
@@ -116,9 +117,11 @@ export default function TutorialsClient() {
               />
             </div>
 
-            <div className="text-sm text-gray-600 flex items-center">
+            <div className=" text-gray-600 flex items-center justify-end border border-amber-200 rounded-xl px-3  ">
               Showing{" "}
-              <span className="font-semibold mx-1">{filtered.length}</span>{" "}
+              <span className="font-bold mx-1 text-black">
+                {filtered.length}
+              </span>
               tutorial{filtered.length === 1 ? "" : "s"}
             </div>
           </div>
@@ -126,7 +129,9 @@ export default function TutorialsClient() {
 
         {/* List */}
         {loading ? (
-          <p>Loading...</p>
+          <div className="flex justify-center items-center">
+            <LoadingSpinner label="Loading..." />
+          </div>
         ) : filtered.length === 0 ? (
           <Card className="p-6">
             <p className="text-gray-600">No tutorials found.</p>

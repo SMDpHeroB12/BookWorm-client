@@ -3,6 +3,7 @@
 import { useAuth } from "@/context/AuthContext";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import LoadingSpinner from "./LoadingSpinner";
 
 export default function PublicOnlyRoute({ children }) {
   const { user, loading } = useAuth();
@@ -16,7 +17,12 @@ export default function PublicOnlyRoute({ children }) {
     }
   }, [user, loading, router]);
 
-  if (loading) return <p className="p-4">Loading...</p>;
+  if (loading)
+    return (
+      <div className="flex justify-center items-center min-h-[50vh]">
+        <LoadingSpinner label="Loading..." />
+      </div>
+    );
   if (user) return null;
 
   return children;

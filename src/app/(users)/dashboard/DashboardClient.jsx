@@ -6,6 +6,7 @@ import { API_BASE_URL } from "@/lib/api";
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 export default function DashboardClient() {
   const [books, setBooks] = useState([]);
@@ -131,7 +132,9 @@ export default function DashboardClient() {
         </div>
 
         {loading ? (
-          <p>Loading...</p>
+          <div className="flex justify-center items-center min-h-[50vh]">
+            <LoadingSpinner label="Loading..." />
+          </div>
         ) : recommended.length === 0 ? (
           <Card className="p-6">
             <p className="text-gray-600">
