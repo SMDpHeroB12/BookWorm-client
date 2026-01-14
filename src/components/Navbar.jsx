@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function Navbar() {
   const { user, logout } = useAuth();
@@ -113,7 +114,17 @@ export default function Navbar() {
                 title="Profile"
                 aria-label="Profile menu"
               >
-                {user?.name?.slice(0, 1)?.toUpperCase() || "U"}
+                {user?.photo ? (
+                  <Image
+                    src={user.photo}
+                    alt={user.name || "Profile"}
+                    width={40}
+                    height={40}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  user?.name?.slice(0, 1)?.toUpperCase() || "U"
+                )}
               </button>
 
               {profileOpen && (

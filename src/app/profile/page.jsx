@@ -5,6 +5,7 @@ import Card from "@/components/ui/Card";
 import { useAuth } from "@/context/AuthContext";
 import { API_BASE_URL } from "@/lib/api";
 import { useEffect, useMemo, useState } from "react";
+import Image from "next/image";
 
 export default function ProfilePage() {
   const { user } = useAuth();
@@ -45,8 +46,18 @@ export default function ProfilePage() {
         {/* Profile Info */}
         <Card className="p-4 sm:p-6">
           <div className="flex items-start gap-4">
-            <div className="w-14 h-14 rounded-full border border-amber-200 bg-amber-50 flex items-center justify-center font-bold text-amber-800">
-              {user?.name?.slice(0, 1)?.toUpperCase() || "U"}
+            <div className="w-14 h-14 rounded-full border border-amber-200 overflow-hidden bg-amber-50 flex items-center justify-center font-bold text-amber-800">
+              {user?.photo ? (
+                <Image
+                  src={user.photo}
+                  alt={user.name || "Profile"}
+                  width={56}
+                  height={56}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                user?.name?.slice(0, 1)?.toUpperCase() || "U"
+              )}
             </div>
 
             <div className="space-y-1">

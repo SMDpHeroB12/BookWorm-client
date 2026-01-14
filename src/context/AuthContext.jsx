@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { API_BASE_URL } from "@/lib/api";
 
 const AuthContext = createContext(null);
 
@@ -10,6 +11,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
+  // 🔹 Load user from token on refresh
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -17,25 +19,47 @@ export const AuthProvider = ({ children }) => {
       return;
     }
 
-    fetch("http://localhost:5000/api/users/me", {
+    fetch(`${API_BASE_URL}/api/users/me`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) throw new Error("Unauthorized");
+        return res.json();
+      })
       .then((data) => {
-        setUser(data);
+        const safeUser = data?.user ? data.user : data;
+        setUser({ ...safeUser, photo: safeUser?.photo || "" });
         setLoading(false);
       })
+
       .catch(() => {
         localStorage.removeItem("token");
+        setUser(null);
         setLoading(false);
       });
   }, []);
 
-  const login = (token, userData) => {
-    localStorage.setItem("token", token);
-    setUser(userData);
+  //  login with email + password
+  const login = async (email, password) => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) return false;
+
+      localStorage.setItem("token", data.token);
+      setUser(data.user); // includes name, email, role, photo
+
+      return true;
+    } catch (err) {
+      return false;
+    }
   };
 
   const logout = () => {
