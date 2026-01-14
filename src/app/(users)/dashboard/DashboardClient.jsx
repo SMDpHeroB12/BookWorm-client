@@ -99,7 +99,7 @@ export default function DashboardClient() {
         {/* Quick actions */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Link href="/browse">
-            <Card className="p-4 hover:-translate-y-[1px] transition">
+            <Card className="p-4 hover:-translate-y-px transition">
               <p className="font-semibold">Browse books</p>
               <p className="text-sm text-gray-600 mt-1">
                 Find a new book and add it to your shelf.
@@ -108,7 +108,7 @@ export default function DashboardClient() {
           </Link>
 
           <Link href="/my-library">
-            <Card className="p-4 hover:-translate-y-[1px] transition">
+            <Card className="p-4 hover:-translate-y-px transition">
               <p className="font-semibold">Go to My Library</p>
               <p className="text-sm text-gray-600 mt-1">
                 Update shelf and progress.
@@ -146,7 +146,7 @@ export default function DashboardClient() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {recommended.map((b) => (
               <Link key={b._id} href={`/books/${b._id}`}>
-                <Card className="p-3 hover:-translate-y-[1px] transition">
+                <Card className="p-3 hover:-translate-y-px transition">
                   <Image
                     src={b.coverImage}
                     alt={b.title}
